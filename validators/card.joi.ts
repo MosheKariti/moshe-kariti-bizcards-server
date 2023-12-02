@@ -1,9 +1,8 @@
 import Joi from "joi";
-import {IAddress, IImage, ICardInput} from "../db/types/db";
-import {patterns} from "./regex-patterns";
+import { IAddress, IImage, ICardInput } from "../db/types/db";
+import { patterns } from "./regex-patterns";
 
 export const joiCardSchema = Joi.object<ICardInput>({
-    //rules for validation
     title: Joi.string().email().min(2).max(256).required(),
     subtitle: Joi.string().email().min(2).max(256).required(),
     description: Joi.string().email().min(2).max(256).required(),
@@ -17,13 +16,11 @@ export const joiCardSchema = Joi.object<ICardInput>({
         city: Joi.string().min(2).max(256).required(),
         street: Joi.string().min(2).max(256).required(),
         state: Joi.string().min(2).max(256),
-        // TODO: check with Yehonatan the requirement about if zip is required
         zip: Joi.number().required(),
         houseNumber: Joi.number().required()
     }),
     image: Joi.object<IImage>({
         alt: Joi.string().min(2).max(256),
-        // TODO: check with Yehonatan the requirement about max url
         url: Joi.string().uri().min(14).max(200)
 
     })

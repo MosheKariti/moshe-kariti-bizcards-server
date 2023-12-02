@@ -11,4 +11,3 @@ export const roleSchema = new Schema<IRole>({
 });
 
 export default roleSchema;
-//CREATE TABLE ROLE (name VARCHAR(255) UNIQUE NULL DEFAULT 'user')

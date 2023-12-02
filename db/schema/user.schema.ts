@@ -1,8 +1,8 @@
 import { Schema } from "mongoose";
-import {IUser} from "../types/db";
-import {addressSchema} from "./addess.schema";
-import {nameSchema} from "./name.schema";
-import {imageSchema} from "./image.schema";
+import { IUser } from "../types/db";
+import { addressSchema } from "./address.schema";
+import { nameSchema } from "./name.schema";
+import { imageSchema } from "./image.schema";
 
 export const userSchema = new Schema<IUser>({
     address: {

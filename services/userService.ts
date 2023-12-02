@@ -2,17 +2,13 @@ import { User } from "../db/model/user.model";
 import { IUser } from "../db/types/db";
 import bcrypt  from "bcrypt";
 import jwt from "jsonwebtoken";
-import {ApplicationError} from "../error/application-error";
+import { ApplicationError } from "../error/application-error";
 
 const saveUser = async (userData: IUser) => {
-    // init a new Mongo User
     const user = new User(userData);
-    //save the user
-    //Encrypt the password (hash):
     user.password = await bcrypt.hash(user.password, 12);
     return user.save();
 }
-
 const getSecret = ()=>{
     return process.env.JWT_SECRET ?? "secret";
 }

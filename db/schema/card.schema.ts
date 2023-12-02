@@ -1,7 +1,7 @@
 import { Schema } from "mongoose";
 import { ICard } from "../types/db";
 import { imageSchema } from "./image.schema";
-import { addressSchema } from "./addess.schema";
+import { addressSchema } from "./address.schema";
 
 export const cardSchema = new Schema<ICard>({
     title: { type: String, required: true, minlength: 2, maxlength: 256 },

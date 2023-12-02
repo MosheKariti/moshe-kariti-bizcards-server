@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import {IName} from "../types/db";
+import { IName } from "../types/db";
 
 export const nameSchema = new Schema<IName>({
    first: {

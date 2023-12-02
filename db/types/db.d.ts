@@ -1,16 +1,13 @@
-import e from "express";
-import mongoose, {mongo} from "mongoose";
+import mongoose from "mongoose";
 
 export type IRole = {
     name: string;
 };
-
 export type IName = {
     first: string;
     middle: string;
     last: string;
 }
-
 export type IAddress = {
     state: string;
     country: string;
@@ -19,12 +16,10 @@ export type IAddress = {
     houseNumber: number;
     zip?: number;
 }
-
 export type IImage = {
     url: string;
     alt: string;
 }
-
 export type IUser = {
     name: IName;
     isBusiness: boolean;
@@ -35,7 +30,6 @@ export type IUser = {
     address: IAddress;
     isAdmin?: boolean;
 }
-
 export type ICardInput = {
     title: string;
     subtitle: string;
@@ -46,18 +40,13 @@ export type ICardInput = {
     image: IImage;
     address: IAddress;
 }
-
 export type ICard = ICardInput & {
     bizNumber: number;
     likes: string[];
     user_id: mongoose.Types.ObjectId;
     createdAt: Date;
 }
-
 export type ILogin = {
     email: string;
     password: string;
 }
-
-
-// Roles: "admin"|"user"|"moderator"|"VIP"|"business"
