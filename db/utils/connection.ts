@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import chalk from "chalk";
+import chalk from 'chalk';
 
 export const connect = async () => {
     const host = process.env.DATABASE_HOST;

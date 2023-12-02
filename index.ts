@@ -1,17 +1,27 @@
-import express from 'express';
+import express from "express";
 import { config } from "dotenv";
-import { connect } from "./db/utils/connection";
-import chalk from "chalk";
+import usersRouter from "./routes/users";
 import { logger } from "./middleware/logger";
-config();
+import { connect } from "./db/utils/connection";
+import {errorHandler} from "./middleware/errorHandler";
+config(); //load all the values from .env
 connect();
 const app = express();
 
+//add an express middleware that uses JSON.parse(body)
 app.use(express.json());
 app.use(logger);
 
+// serve the static files in the public directory
+app.use(express.static("public"));
+app.use("/api/v1/users", usersRouter);
+
+app.use(errorHandler);
+
+//TODO: ADD not found
+
 const PORT = process.env.EXPRESS_PORT;
 
-app.listen(PORT,() => {
-    console.log(chalk.blue(`App is running on http://localhost:${PORT}`));
-})
+app.listen(PORT, () => {
+    console.log(`App is running on http://localhost:${PORT}`);
+});
