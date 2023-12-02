@@ -1,8 +1,8 @@
 import express from 'express';
 import { config } from "dotenv";
-import { connect } from "./db/connection";
+import { connect } from "./db/utils/connection";
 import chalk from "chalk";
-import {logger} from "./middleware/logger";
+import { logger } from "./middleware/logger";
 config();
 connect();
 const app = express();
