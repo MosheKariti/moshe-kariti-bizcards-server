@@ -9,6 +9,30 @@ const saveUser = async (userData: IUser) => {
     user.password = await bcrypt.hash(user.password, 12);
     return user.save();
 }
+
+const updateUser = async (userID: string, userNewData: IUser) => {
+    const user = await User.findById(userID);
+    if (!user) {
+        return `user with id: ${userID} Not found`;
+    }
+    user.address = userNewData.address;
+    user.name = userNewData.name;
+    user.image = userNewData.image;
+    user.phone = userNewData.phone;
+
+    return User.findByIdAndUpdate(userID, user, { new: true });
+}
+
+const patchUser = async (userID: string) => {
+    const user = await User.findById(userID);
+    if (!user) {
+        return `user with id: ${userID} Not found`;
+    }
+    user.isBusiness = !user.isBusiness;
+    const updatedUser = await User.findByIdAndUpdate(userID, user, { new: true });
+    return { message: {isBusiness: updatedUser?.isBusiness} }
+}
+
 const getSecret = ()=>{
     return process.env.JWT_SECRET ?? "secret";
 }
@@ -25,5 +49,5 @@ const login = async (email: string, password: string) => {
     );
 }
 
-export const userService = { saveUser, login };
+export const userService = { saveUser, updateUser, patchUser, login };
 

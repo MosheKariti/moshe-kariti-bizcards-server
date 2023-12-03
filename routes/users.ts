@@ -5,6 +5,7 @@ import { userService } from "../services/userService";
 import { User } from "../db/model/user.model";
 import { verifyAdmin } from "../middleware/verify-admin";
 import { verifyUserOrAdmin } from "../middleware/verify-userOrAdmin";
+import { verifyUser } from "../middleware/verify-user";
 
 const router = Router();
 
@@ -50,7 +51,44 @@ router.get("/:id", verifyUserOrAdmin, async (req, res, next) => {
     } catch (e) {
         next(e)
     }
+});
 
+// update user
+router.put("/:id", verifyUser, async (req, res, next) => {
+    try {
+        const dataToUpdate = req.body as IUser;
+        const userId = req.params.id;
+        const updateUser = await userService.updateUser(userId,dataToUpdate);
+        return res.status(200).json(updateUser);
+    } catch (e) {
+        return res.status(400).json(e);
+    }
+});
+
+// patch user
+router.patch("/:id", verifyUser, async (req, res, next) => {
+    try {
+        const userId = req.params.id;
+        const patchUser = await userService.patchUser(userId);
+        return res.status(200).json(patchUser);
+    } catch (e) {
+        return res.status(400).json(e);
+    }
+});
+
+// delete user
+router.delete("/:id", verifyUserOrAdmin, async (req, res, next) => {
+    try {
+        const userId = req.params.id;
+        const deletedUser = await User.findByIdAndDelete(userId);
+        if (!deletedUser) {
+            res.status(404).json({ message: 'User not found' });
+        } else {
+            res.status(200).json({ message: 'User deleted successfully' });
+        }
+    } catch (e) {
+        return res.status(500).json(e);
+    }
 });
 
 export default router;

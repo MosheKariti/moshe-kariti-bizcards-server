@@ -2,7 +2,7 @@
 POST {{host}}{{users}}
 Content-Type: application/json
 
-{{admin-user}}
+{{business-user}}
 
 
 ### Login
@@ -18,5 +18,25 @@ Authorization: Bearer {{business-user-token}}
 
 
 ### Get user:
-GET {{host}}{{users}}/656b658cde9e28ffc2e157a4
+GET {{host}}{{users}}/656b7e9abd8589a41bd3ea9e
 Authorization: Bearer {{business-user-token}}
+
+
+### Update user:
+PUT {{host}}{{users}}/656b7e9abd8589a41bd3ea9e
+Content-Type: application/json
+Authorization: Bearer {{business-user-token}}
+
+{{update-user}}
+
+
+### Patch user:
+PATCH {{host}}{{users}}/656b7e9abd8589a41bd3ea9e
+Authorization: Bearer {{business-user-token}}
+
+
+### Delete user:
+DELETE {{host}}{{users}}/656b7e9abd8589a41bd3ea9e
+Authorization: Bearer {{business-user-token}}
+
+
