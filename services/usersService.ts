@@ -49,5 +49,5 @@ const login = async (email: string, password: string) => {
     );
 }
 
-export const userService = { saveUser, updateUser, patchUser, login };
+export const usersService = { saveUser, updateUser, patchUser, login };
 

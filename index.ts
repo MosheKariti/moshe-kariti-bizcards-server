@@ -1,6 +1,8 @@
 import express from "express";
 import { config } from "dotenv";
 import usersRouter from "./routes/users";
+import cardsRouter from "./routes/cards";
+
 import { logger } from "./middleware/logger";
 import { connect } from "./db/utils/connection";
 import {errorHandler} from "./middleware/errorHandler";
@@ -15,6 +17,8 @@ app.use(logger);
 // serve the static files in the public directory
 app.use(express.static("public"));
 app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/cards", usersRouter);
+
 
 app.use(errorHandler);
 

@@ -1,3 +1,5 @@
+/////// USERS ///////
+
 ### Post a user:
 POST {{host}}{{users}}
 Content-Type: application/json
@@ -40,3 +42,4 @@ DELETE {{host}}{{users}}/656b7e9abd8589a41bd3ea9e
 Authorization: Bearer {{business-user-token}}
 
 
+/////// CARDS ///////
