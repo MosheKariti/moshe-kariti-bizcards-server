@@ -1,8 +1,9 @@
 // User type for login:
 export type RequestUser = {
   id: string;
-  email: string;
+  iat: number;
   isAdmin: boolean;
+  isBusiness: boolean;
 };
 
 //ammend express - add RequestUser to Request

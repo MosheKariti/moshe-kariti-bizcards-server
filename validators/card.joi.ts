@@ -3,9 +3,9 @@ import { IAddress, IImage, ICardInput } from "../db/types/db";
 import { patterns } from "./regex-patterns";
 
 export const joiCardSchema = Joi.object<ICardInput>({
-    title: Joi.string().email().min(2).max(256).required(),
-    subtitle: Joi.string().email().min(2).max(256).required(),
-    description: Joi.string().email().min(2).max(256).required(),
+    title: Joi.string().min(2).max(256).required(),
+    subtitle: Joi.string().min(2).max(256).required(),
+    description: Joi.string().min(2).max(256).required(),
     web: Joi.string().uri().min(14).max(200),
     email: Joi.string().email().min(5).max(30).required(),
     phone: Joi.string().pattern(patterns.phone)

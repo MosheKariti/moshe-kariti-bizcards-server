@@ -43,3 +43,19 @@ Authorization: Bearer {{business-user-token}}
 
 
 /////// CARDS ///////
+
+### Get all cards:
+GET {{host}}{{cards}}
+Authorization: Bearer {{business-user-token}}
+
+
+### Get my cards:
+GET {{host}}{{cards}}/my-cards
+Authorization: Bearer {{business-user-token}}
+
+### Post a card:
+POST {{host}}{{cards}}
+Content-Type: application/json
+Authorization: Bearer {{business-user-token}}
+
+{{card}}

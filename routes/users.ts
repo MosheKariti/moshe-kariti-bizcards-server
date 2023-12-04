@@ -9,19 +9,16 @@ import { verifyUser } from "../middleware/verify-user";
 
 const router = Router();
 
-// Register
 router.post("/", validateUser, async (req, res, next) => {
     const body = req.body as IUser;
     try {
         const savedUser = await usersService.saveUser(body);
         return res.status(200).json(savedUser);
     } catch (e) {
-        //BAD Request (validation failed)
         return res.status(400).json(e);
     }
 });
 
-//Login
 router.post("/login", validateLogin, async (req, res, next) => {
     try {
         const { email, password } = req.body as ILogin;
@@ -32,14 +29,12 @@ router.post("/login", validateLogin, async (req, res, next) => {
     }
 });
 
-//Get all users
 router.get("/", verifyAdmin, async (req, res, next) => {
 
     const users = await User.find();
     res.json(users);
 });
 
-//Get user by ID
 router.get("/:id", verifyUserOrAdmin, async (req, res, next) => {
     try {
         const id = req.params.id;
@@ -53,8 +48,7 @@ router.get("/:id", verifyUserOrAdmin, async (req, res, next) => {
     }
 });
 
-// update user
-router.put("/:id", verifyUser, async (req, res, next) => {
+router.put("/:id", verifyUser, validateUser, async (req, res, next) => {
     try {
         const dataToUpdate = req.body as IUser;
         const userId = req.params.id;
@@ -65,7 +59,6 @@ router.put("/:id", verifyUser, async (req, res, next) => {
     }
 });
 
-// patch user
 router.patch("/:id", verifyUser, async (req, res, next) => {
     try {
         const userId = req.params.id;
@@ -76,7 +69,6 @@ router.patch("/:id", verifyUser, async (req, res, next) => {
     }
 });
 
-// delete user
 router.delete("/:id", verifyUserOrAdmin, async (req, res, next) => {
     try {
         const userId = req.params.id;

@@ -17,7 +17,7 @@ app.use(logger);
 // serve the static files in the public directory
 app.use(express.static("public"));
 app.use("/api/v1/users", usersRouter);
-app.use("/api/v1/cards", usersRouter);
+app.use("/api/v1/cards", cardsRouter);
 
 
 app.use(errorHandler);
