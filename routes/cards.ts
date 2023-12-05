@@ -11,6 +11,8 @@ import {RequestUser} from "../@types/express";
 import {Schema} from "mongoose";
 import { ObjectId } from 'mongodb';
 import {verifyBusinessUser} from "../middleware/verify-business-user";
+import {verifyToken} from "../middleware/verify-token";
+import {verifyUserOrAdmin} from "../middleware/verify-userOrAdmin";
 
 
 const router = Router();
@@ -40,6 +42,16 @@ router.get("/my-cards",  async (req, res, next) => {
     }
 });
 
+router.get("/:id",  async (req, res, next) => {
+    const cardId = req.params.id;
+    try {
+        const card = await Card.findById(cardId);
+        return res.status(200).json(card);
+    } catch (e) {
+        return res.status(400).json(e);
+    }
+});
+
 router.post("/",verifyBusinessUser, validateCard, async (req, res, next) => {
     const authorization = req.headers.authorization;
     if (!authorization) {
@@ -54,6 +66,42 @@ router.post("/",verifyBusinessUser, validateCard, async (req, res, next) => {
     try {
         const saveCard = await card.save();
         return res.status(200).json(saveCard);
+    } catch (e) {
+        return res.status(400).json(e);
+    }
+});
+
+router.patch("/:id",verifyToken, async (req, res, next) => {
+    const user = req.user;
+    const cardId = req.params.id;
+    try {
+        const card = await Card.findById(cardId);
+        if (card && user) {
+            const index = card.likes.indexOf(user.id);
+            if (index != -1) {
+                card.likes.splice(index, 1);
+            } else {
+                card.likes.push(user.id);
+            }
+            const saveCard = await card.save();
+            return res.status(200).json(saveCard);
+        }
+    } catch (e) {
+        return res.status(400).json(e);
+    }
+});
+
+router.delete("/:id", verifyToken, async (req, res, next) => {
+    const user = req.user;
+    const cardId = req.params.id;
+    try {
+        const card = await Card.findById(cardId);
+        if (card && user) {
+            if (card.user_id.toString() === user.id || user.isAdmin) {
+                const deleteCard = await Card.findByIdAndDelete(card.id);
+                return res.status(200).json(deleteCard);
+            }
+        }
     } catch (e) {
         return res.status(400).json(e);
     }

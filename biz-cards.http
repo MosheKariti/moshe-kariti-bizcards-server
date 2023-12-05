@@ -53,9 +53,21 @@ Authorization: Bearer {{business-user-token}}
 GET {{host}}{{cards}}/my-cards
 Authorization: Bearer {{business-user-token}}
 
+### Get card by id:
+GET {{host}}{{cards}}/656d6bf46aa98563a29c62ae
+
 ### Post a card:
 POST {{host}}{{cards}}
 Content-Type: application/json
 Authorization: Bearer {{business-user-token}}
 
 {{card}}
+
+### Card like/unlike:
+PATCH {{host}}{{cards}}/656d6bf46aa98563a29c62ae
+Content-Type: application/json
+Authorization: Bearer {{business-user-token}}
+
+### Delete card:
+DELETE {{host}}{{cards}}/656d6bab3a0e864c720620a7
+Authorization: Bearer {{business-user-token}}

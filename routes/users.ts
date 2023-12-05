@@ -76,7 +76,7 @@ router.delete("/:id", verifyUserOrAdmin, async (req, res, next) => {
         if (!deletedUser) {
             res.status(404).json({ message: 'User not found' });
         } else {
-            res.status(200).json({ message: 'User deleted successfully' });
+            res.status(200).json(deletedUser);
         }
     } catch (e) {
         return res.status(500).json(e);
