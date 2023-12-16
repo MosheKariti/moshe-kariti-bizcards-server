@@ -2,27 +2,40 @@ import express from "express";
 import { config } from "dotenv";
 import usersRouter from "./routes/users";
 import cardsRouter from "./routes/cards";
-
-import { logger } from "./middleware/logger";
 import { connect } from "./db/utils/connection";
 import {errorHandler} from "./middleware/errorHandler";
-config(); //load all the values from .env
+import { morganMiddleware } from './middleware/logger';
+import cors from 'cors';
+import dotenv from 'dotenv';
+
+if (process.env.NODE_ENV === 'production') {
+    dotenv.config({ path: '.env.prod' });
+} else {
+    dotenv.config({path: '.env.dev'});
+}
+
+config();
 connect();
 const app = express();
 
-//add an express middleware that uses JSON.parse(body)
-app.use(express.json());
-app.use(logger);
+const allowedOrigins = [
+    'http:localhost:8080//api/v1/users',
+    'http:localhost:8080//api/v1/cards'
+];
+const corsOptions = {
+    origin: allowedOrigins
+}
+app.use(cors(corsOptions));
 
-// serve the static files in the public directory
+app.use(express.json());
+app.use(morganMiddleware);
 app.use(express.static("public"));
 app.use("/api/v1/users", usersRouter);
 app.use("/api/v1/cards", cardsRouter);
-
-
 app.use(errorHandler);
-
-//TODO: ADD not found
+app.use((req, res) => {
+    res.status(404).json('Not Found');
+})
 
 const PORT = process.env.EXPRESS_PORT;
 
